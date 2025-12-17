@@ -1,0 +1,57 @@
+labels:
+  men-facet-abuse:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has been abusing facet mentions
+  mass-follow-mid:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has followed 300+ accounts in 30 minutes
+  mass-follow-high:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has followed 1000+ accounts in 30 minutes
+  shopping-spam:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has posted 15+ shopping links in 30 minutes
+  inauth-fundraising:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account is likely performing inauthentic fundraising
+  reply-link-spam:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has replied with a link twenty or more times in a 24 hour period
+  stpk-creations:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has made more than two starterpacks in a week
+  some-blocks:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account was blocked 20+ times in 24 hours
+  mass-blocks:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account was blocked 100+ times in 24 hours
+  handle-changed:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has changed their handle recently.
+  many-handle-chgs:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account has changed their handle 3+ times in a 24 hour period.
+  suss-handle-change:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Suspicious handle change
+  new-acct-replies:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account made 10+ replies in their first hour with low top level count.
+  new-acct-slurs:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account that is relatively new found to making slur posts.

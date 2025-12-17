@@ -1,0 +1,39 @@
+  # For uris you can use {did}, {collection}, and {rkey} to parse at uris
+  # For uris you can use {did}, {collection}, and {rkey} to parse at uris
+ui_config:
+  default_summary_features:
+    - actions: ['operation#*']
+      features:
+        - UserId
+        - Handle
+        - DisplayName
+        - Collection
+        - AtUri
+        - AccountCreatedAt
+        - PdsHost
+        - FollowersCount
+        - FollowingCount
+        - PostsCount
+        - PostText
+        - PostReplyRoot
+        - PostReplyParent
+        - PostExternalTitle
+        - PostExternalDescription
+        - PostExternalLink
+        - SentimentScore
+        - FollowSubjectDid
+        - ListName
+        - ListPurpose
+        - ListitemList
+        - ListitemSubjectDid
+        - LikeSubject
+        - LikeSubjectDid
+        - RepostSubject
+        - RepostSubjectDid
+        - ProfileDisplayName
+        - ProfileDescription
+
+  # For uris you can use {did}, {collection}, and {rkey} to parse at uris
+  external_links:
+    UserId: 'https://bsky.app/profile/{entity_id}'
+    AtUri: 'https://pdsls.dev/{entity_id}'
