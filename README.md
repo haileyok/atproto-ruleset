@@ -1,5 +1,8 @@
 # Osprey ATProto Ruleset
 
+> [!WARNING]
+> The content in this repository drives social network moderation decisions. As such, there may be items that you find offensive, such as lists of slurs.
+
 This is a ruleset for [Osprey](https://github.com/roostorg/osprey) for use with ATProto, and specifically for [Bluesky](https://bsky.app). It is the ruleset that is used live on
 the [labeler that I personally run](https://bsky.app/profile/labeler.hailey.at). It may be used in conjunction with [my fork of Osprey](https://github.com/haileyok/osprey), which
 has implemented various components required for these rules (ATProto labels output sink, ML model calling, Redis counter system, etc).
