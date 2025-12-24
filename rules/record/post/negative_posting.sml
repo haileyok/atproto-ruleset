@@ -6,11 +6,17 @@ Import(
   ],
 )
 
-_Gate = SentimentScoreUnwrapped <= -0.8
+_Gate = SentimentScoreUnwrapped <= -0.85
 
 NegativeSentimentCount = IncrementWindow(
-  key=f'neg-post-{UserId}',
-  window_seconds=4*Hour,
+  key=f'neg-post-3hr-{UserId}',
+  window_seconds=3*Hour,
+  when_all=[_Gate],
+)
+
+_NegativeSentimentCountHour = IncrementWindow(
+  key=f'neg-post-1hr-{UserId}',
+  window_seconds=Hour,
   when_all=[_Gate],
 )
 
@@ -24,7 +30,7 @@ NegativePostRule = Rule(
 )
 
 NegativePostingRule = Rule(
-  when_all=[NegativeSentimentCount >= 3],
+  when_all=[NegativeSentimentCount >= 10, _NegativeSentimentCountHour >= 4],
   description='User has made five or more negative posts in a four hour window',
 )
 

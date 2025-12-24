@@ -9,8 +9,14 @@ Import(
 _Gate = ToxicityScoreUnwrapped <= -0.997
 
 ToxicPostCount = IncrementWindow(
-  key=f'tox-post-{UserId}',
-  window_seconds=4*Hour,
+  key=f'tox-post-3hr-{UserId}',
+  window_seconds=3*Hour,
+  when_all=[_Gate],
+)
+
+_ToxicPostCountHour = IncrementWindow(
+  key=f'tox-post-1hr-{UserId}',
+  window_seconds=Hour,
   when_all=[_Gate],
 )
 
@@ -23,7 +29,7 @@ ToxicPostRule = Rule(
 )
 
 ToxicPostingRule = Rule(
-  when_all=[ToxicPostCount >= 3],
+  when_all=[ToxicPostCount >= 10 or _ToxicPostCountHour >= 4],
   description='User has made three or more toxic posts in a four hour window',
 )
 
