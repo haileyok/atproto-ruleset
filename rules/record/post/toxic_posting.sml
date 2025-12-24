@@ -20,30 +20,9 @@ _ToxicPostCountHour = IncrementWindow(
   when_all=[_Gate],
 )
 
-ToxicPostRule = Rule(
-  when_all=[
-    _Gate,
-    PostIsReply,
-  ],
-  description='This post is toxic',
-)
-
 ToxicPostingRule = Rule(
   when_all=[ToxicPostCount >= 10 or _ToxicPostCountHour >= 4],
   description='User has made three or more toxic posts in a four hour window',
-)
-
-WhenRules(
-  rules_any=[ToxicPostRule],
-  then=[
-    AtprotoLabel(
-      entity=AtUri,
-      label='toxic-post',
-      comment='This post is toxic',
-      expiration_in_hours=None,
-      cid=Cid,
-    ),
-  ],
 )
 
 WhenRules(
