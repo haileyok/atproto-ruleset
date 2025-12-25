@@ -12,7 +12,7 @@ _Counter = IncrementWindow(
 )
 
 HandleChangedRule = Rule(
-  when_all=[AccountAgeSecondsUnwrapped >= 300],
+  when_all=[AccountAgeSecondsUnwrapped >= 3600],
   description='User has updated their handle recently.',
 )
 
