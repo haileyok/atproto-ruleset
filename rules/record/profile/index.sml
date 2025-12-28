@@ -9,3 +9,6 @@ Import(
 Require(
   rule='rules/record/profile/hailey_profile.sml',
 )
+Require(
+  rule='rules/record/profile/bsky_store.sml',
+)

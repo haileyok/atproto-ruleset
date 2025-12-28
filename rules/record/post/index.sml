@@ -13,6 +13,7 @@ Require(rule='rules/record/post/inauthentic_fundraising.sml')
 Require(rule='rules/record/post/new_account_slurs.sml')
 Require(rule='rules/record/post/negative_posting.sml')
 Require(rule='rules/record/post/toxic_posting.sml')
+Require(rule='rules/record/post/bsky_store.sml')
 
 # Replies Only
 Require(
