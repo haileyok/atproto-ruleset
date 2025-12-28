@@ -27,11 +27,15 @@ _HasWord = SimpleListContains(
     'tshirt',
     'store',
     'sell',
+    'bought',
+    'buy',
   ],
   phrases=PostTextTokens,
 ) != None
 
-_PostGate = _HasDomain and _HasWord and _AgeGate
+_HasFuckIce = RegexMatch(target=PostText, pattern=r'(?i)fuck-?ice.+off')
+
+_PostGate = ((_HasDomain and _HasWord) or _HasFuckIce) and _AgeGate
 
 BskyStorePostRule = Rule(
   when_all=[_DisplayNameGate or _PostGate],
