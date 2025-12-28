@@ -8,7 +8,7 @@ Import(
 
 _AgeGate = AccountAgeSecondsUnwrapped <= Day or PostsCount <= 5
 
-_BskyStoreDisplayName = RegexMatch(target=DisplayName, pattern=r'(?i)^bl?sky ? sto?re$')
+_BskyStoreDisplayName = RegexMatch(target=DisplayName, pattern=r'(?i)^bl?sky ?sto?re$')
 
 _DisplayNameGate = _BskyStoreDisplayName == True and _AgeGate
 

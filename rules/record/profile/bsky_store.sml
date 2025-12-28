@@ -6,7 +6,7 @@ Import(
   ],
 )
 
-_BskyStoreDisplayName = RegexMatch(target=ProfileDisplayName, pattern=r'(?i)^bl?sky ? sto?re$')
+_BskyStoreDisplayName = RegexMatch(target=ProfileDisplayName, pattern=r'(?i)^bl?sky ?sto?re$')
 
 _Gate = _BskyStoreDisplayName == True and (AccountAgeSecondsUnwrapped <= Day or PostsCount <= 5)
 
