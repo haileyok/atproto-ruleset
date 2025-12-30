@@ -55,3 +55,7 @@ labels:
     valid_for: [UserId]
     connotation: neutral
     description: Account that is relatively new found to making slur posts.
+  coordinated-abuse:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account which is engaging in coordinated abuse.
