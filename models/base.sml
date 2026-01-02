@@ -24,6 +24,12 @@ DisplayName: str = JsonData(
   coerce_type=True,
 )
 
+Description: str = JsonData(
+  path='$.eventMetadata.profile.description',
+  required=False,
+  coerce_type=True,
+)
+
 FollowersCount: int = JsonData(
   path='$.eventMetadata.profile.followersCount',
   required=False,

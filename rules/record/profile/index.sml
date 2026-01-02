@@ -12,3 +12,6 @@ Require(
 Require(
   rule='rules/record/profile/bsky_store.sml',
 )
+Require(
+  rule='rules/record/profile/julie.sml',
+)

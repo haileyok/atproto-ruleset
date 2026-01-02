@@ -59,3 +59,7 @@ labels:
     valid_for: [UserId]
     connotation: neutral
     description: Account which is engaging in coordinated abuse.
+  general-spam:
+    valid_for: [UserId]
+    connotation: neutral
+    description: Account which is partaking in general spam.
