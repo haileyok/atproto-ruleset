@@ -35,19 +35,6 @@ NegativePostingRule = Rule(
 )
 
 WhenRules(
-  rules_any=[NegativePostRule],
-  then=[
-    AtprotoLabel(
-      entity=AtUri,
-      label='negative-post',
-      comment='This post is negative',
-      expiration_in_hours=None,
-      cid=Cid,
-    ),
-  ],
-)
-
-WhenRules(
   rules_any=[NegativePostingRule],
   then=[
     AtprotoLabel(
