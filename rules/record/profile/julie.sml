@@ -29,3 +29,13 @@ WhenRules(
     ),
   ],
 )
+
+WhenRules(
+  rules_any=[JulieProfileRule],
+  then=[
+    AtprotoList(
+      did=UserId,
+      list_uri='at://did:plc:saslbwamakedc4h6c5bmshvz/app.bsky.graph.list/3mbgnj3f2id2l',
+    ),
+  ],
+)
