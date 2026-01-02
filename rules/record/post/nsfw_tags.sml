@@ -25,6 +25,7 @@ WhenRules(
   then=[
     AtprotoLabel(
       entity=AtUri,
+      cid=Cid,
       label='likely-nsfw',
       comment=f'Post contains one or many NSFW hashtags: {_FoundTagUnwrapped}',
       expiration_in_hours=None,
