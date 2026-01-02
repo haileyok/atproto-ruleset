@@ -14,6 +14,7 @@ Require(rule='rules/record/post/new_account_slurs.sml')
 Require(rule='rules/record/post/negative_posting.sml')
 Require(rule='rules/record/post/toxic_posting.sml')
 Require(rule='rules/record/post/bsky_store.sml')
+Require(rule='rules/record/post/nsfw_tags.sml')
 
 # Replies Only
 Require(

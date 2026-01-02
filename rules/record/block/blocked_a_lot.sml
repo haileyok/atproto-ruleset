@@ -45,7 +45,7 @@ WhenRules(
       entity=BlockSubjectDid,
       comment='Account was blocked 100 ore more times in 24 hours',
       label='mass-blocks',
-      expiration_in_hours=7*24,
+      expiration_in_hours=3*24,
     ),
   ],
 )
