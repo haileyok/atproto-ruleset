@@ -15,3 +15,6 @@ Require(
 Require(
   rule='rules/record/profile/julie.sml',
 )
+Require(
+  rule='rules/record/profile/suzune.sml',
+)
