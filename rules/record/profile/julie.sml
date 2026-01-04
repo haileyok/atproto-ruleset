@@ -9,6 +9,7 @@ Import(
 JulieProfileRule = Rule(
   when_all=[
     (StringContains(s=ProfileDescription, substrings=True, phrase='girly.bio')
+      or StringContains(s=ProfileDescription, substrings=True, phrase='onlyfans')
       or StringContains(s=ProfileDescription, substrings=True, phrase='juliewaifu')
       or StringContains(s=ProfileDescription, substrings=True, phrase='waifujulie')),
     (StringContains(s=ProfileDisplayName, substrings=True, phrase='julie') or
