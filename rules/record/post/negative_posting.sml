@@ -33,15 +33,3 @@ NegativePostingRule = Rule(
   when_all=[NegativeSentimentCount >= 10, _NegativeSentimentCountHour >= 4],
   description='User has made five or more negative posts in a four hour window',
 )
-
-WhenRules(
-  rules_any=[NegativePostingRule],
-  then=[
-    AtprotoLabel(
-      entity=UserId,
-      label='negative-poster',
-      comment='This user made five or more negative posts in four hours',
-      expiration_in_hours=2 * Day,
-    ),
-  ],
-)
