@@ -12,7 +12,7 @@ SuzuneProfileRule = Rule(
     (StringContains(s=ProfileDisplayName, substrings=True, phrase='suzune') or
       StringContains(s=Handle, substrings=True, phrase='suzune') or
       StringContains(s=ProfileDescription, substrings=True, phrase='suzune')),
-    AccountAgeSecondsUnwrapped <= 12*Hour,
+    AccountAgeSecondsUnwrapped <= Day,
   ],
   description='Suzune profile'
 )

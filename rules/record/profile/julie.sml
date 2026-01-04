@@ -14,7 +14,7 @@ JulieProfileRule = Rule(
       or StringContains(s=ProfileDescription, substrings=True, phrase='waifujulie')),
     (StringContains(s=ProfileDisplayName, substrings=True, phrase='julie') or
       StringContains(s=Handle, substrings=True, phrase='julie')),
-    AccountAgeSecondsUnwrapped <= 12*Hour,
+    AccountAgeSecondsUnwrapped <= Day,
   ],
   description='Julie profile'
 )
