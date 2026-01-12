@@ -32,7 +32,7 @@ WhenRules(
       entity=UserId,
       label='toxic-poster',
       comment='This user made three or more toxic posts in four hours',
-      expiration_in_hours=2 * Day,
+      expiration_in_hours=2 * 25,
     ),
   ],
 )
