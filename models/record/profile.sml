@@ -27,3 +27,9 @@ ProfilePinnedPost: Entity[str] = EntityJson(
   path='$.operation.record.pinnedPost.uri',
   required=False,
 )
+
+# Avatar blob CID from the record itself (for profile create/update events)
+ProfileAvatarCid: Optional[str] = JsonData(
+  path="$.operation.record.avatar.ref.['$link']",
+  required=False,
+)

@@ -8,13 +8,13 @@ Import(
 
 _InitialGate = AccountAgeSecondsUnwrapped <= 7 * Day or PostsCount <= 25 or FollowersCount <= 5
 
-_ContainsSlurHigh = CensorizedListMatch(
+_ContainsSlurHigh = CensorizedListContains(
   list='slurs',
   plurals=True,
   phrases=PostTextCleanedTokens,
 ) != None
 
-_ContainsSlurLow = CensorizedListMatch(
+_ContainsSlurLow = CensorizedListContains(
   list='slurs_low',
   plurals=True,
   phrases=PostTextCleanedTokens,
