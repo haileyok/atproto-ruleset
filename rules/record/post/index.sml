@@ -29,3 +29,4 @@ Require(rule='rules/record/post/extreme_link_spam.sml')
 Require(rule='rules/record/post/coordinated_political_spam.sml')
 
 Require(rule='rules/record/post/coordinated_political_spam.sml')
+Require(rule='rules/record/post/recovery_scam.sml')
