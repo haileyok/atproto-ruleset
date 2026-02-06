@@ -57,7 +57,7 @@ MediumHighCoordinatedSpam = Rule(
 # MEDIUM SEVERITY: Any account with extreme short post volume
 MediumCoordinatedSpam = Rule(
   when_all=[
-    PostCount30m == 40,
+    PostCount30m == 80,
     _IsShortPost,
   ],
   description=f'Account {Handle} posted 40+ short posts in 30 minutes - coordinated spam or bot behavior',
