@@ -30,3 +30,5 @@ Require(rule='rules/record/post/coordinated_political_spam.sml')
 
 Require(rule='rules/record/post/coordinated_political_spam.sml')
 Require(rule='rules/record/post/recovery_scam.sml')
+Require(rule='rules/record/post/gaza_coordinated_fundraising.sml')
+Require(rule='rules/record/post/gaza_coordinated_content.sml')

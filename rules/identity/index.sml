@@ -7,3 +7,4 @@ Import(
 
 Require(rule='rules/identity/update_handle.sml')
 Require(rule='rules/identity/elon_handle.sml')
+Require(rule='rules/identity/gaza_spam_handle_registration.sml')

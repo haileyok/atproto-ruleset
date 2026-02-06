@@ -18,3 +18,4 @@ Require(
 Require(
   rule='rules/record/profile/suzune.sml',
 )
+Require(rule='rules/record/profile/gaza_fundraising_profile.sml')
