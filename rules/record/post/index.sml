@@ -25,3 +25,4 @@ Require(
   rule='rules/record/post/new_account_replies.sml',
   require_if=PostIsReply,
 )
+Require(rule='rules/record/post/extreme_link_spam.sml')
