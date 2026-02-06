@@ -35,7 +35,7 @@ DomainPostCount10m = IncrementWindow(
 # This catches the sex toy and jersey spammers who posted 700+ times
 ExtremeExternalLinkSpamRule = Rule(
   when_all=[
-    ExternalLinkPostCount10m >= 50,
+    ExternalLinkPostCount10m == 50,
   ],
   description=f'Account {UserId} posted 50+ times with external links in 10 minutes',
 )
@@ -43,7 +43,7 @@ ExtremeExternalLinkSpamRule = Rule(
 # Catch accounts with very high post velocity with domains
 ExtremeDomainPostSpamRule = Rule(
   when_all=[
-    DomainPostCount10m >= 50,
+    DomainPostCount10m == 50,
     _HasDomains,
   ],
   description=f'Account {UserId} posted 50+ times with domains in 10 minutes',

@@ -36,7 +36,7 @@ _IsLowEngagement = FollowersCount < 10
 # HIGH SEVERITY: Very new account, very short posts, high volume
 HighSeverityCoordinatedSpam = Rule(
   when_all=[
-    PostCount30m >= 25,
+    PostCount30m == 25,
     _IsVeryShortPost,
     _IsVeryNewAccount,
   ],
@@ -46,7 +46,7 @@ HighSeverityCoordinatedSpam = Rule(
 # MEDIUM-HIGH SEVERITY: New account with high volume short posts
 MediumHighCoordinatedSpam = Rule(
   when_all=[
-    PostCount30m >= 30,
+    PostCount30m == 30,
     _IsShortPost,
     _IsNewAccount,
     _IsLowEngagement,
@@ -57,7 +57,7 @@ MediumHighCoordinatedSpam = Rule(
 # MEDIUM SEVERITY: Any account with extreme short post volume
 MediumCoordinatedSpam = Rule(
   when_all=[
-    PostCount30m >= 40,
+    PostCount30m == 40,
     _IsShortPost,
   ],
   description=f'Account {Handle} posted 40+ short posts in 30 minutes - coordinated spam or bot behavior',
