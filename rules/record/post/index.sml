@@ -26,3 +26,6 @@ Require(
   require_if=PostIsReply,
 )
 Require(rule='rules/record/post/extreme_link_spam.sml')
+Require(rule='rules/record/post/coordinated_political_spam.sml')
+
+Require(rule='rules/record/post/coordinated_political_spam.sml')
