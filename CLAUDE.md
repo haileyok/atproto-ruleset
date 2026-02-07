@@ -24,7 +24,13 @@
 ## Rules
 - Every `Rule` must be referenced somewhere: either in a `WhenRules` block, in another rule's `when_all`, or in an `IncrementWindow`'s `when_all`. No dead rules.
 - `description` uses f-strings with `{Handle}` or `{UserId}`
-- `or` expressions are valid inside `when_all` list items
+- `or` expressions are valid inside `when_all` list items — use infix `or` (e.g., `A or B or C`), NOT function-call `or(A, B, C)`
+
+## Type Rules in `when_all`
+- All items in a `when_all` list must be the same type — do not mix `RuleT` and `bool`
+- `RegexMatch(...)`, variable comparisons (`X < Y`), and `or`/`and` expressions on bools are `bool`
+- `Rule(...)` produces `RuleT`; `RuleT or RuleT` is also `RuleT`
+- In `IncrementWindow` `when_all`, prefer inline `RegexMatch` (bool) with bool gates rather than referencing a `Rule`
 
 ## WhenRules
 - Always use `rules_any=`, never `rules_all=`
