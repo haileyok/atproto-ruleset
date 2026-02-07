@@ -6,52 +6,52 @@ Import(rules=['models/base.sml', 'models/record/base.sml', 'models/record/profil
 # ===== NEW ACCOUNT + SUSPICIOUS HANDLE =====
 
 # Gabriel Costa network - immediate detection
-NewAccountGabrielCosta = Rule(
+NewAccountGabrielCostaRule = Rule(
     when_all=[
         IsCreate == True,
         Collection == 'app.bsky.actor.profile',
         RegexMatch(pattern='gabriell+costa+|gabriel.*costa.*[0-9]', target=Handle),
     ],
-    description='New account with Gabriel Costa CSAM network handle pattern',
+    description=f'New account {Handle} with Gabriel Costa CSAM network handle pattern',
 )
 
 # New account with concerning numeric pattern + age keywords
-NewAccountConcerningHandle = Rule(
+NewAccountConcerningHandleRule = Rule(
     when_all=[
         IsCreate == True,
         Collection == 'app.bsky.actor.profile',
-        RegexMatch(pattern='(teen|baby|young|priv|girl|boy)[0-9]{2,}', target=Handle),
+        RegexMatch(pattern='(teen|baby|young|priv)[0-9]{4,}', target=Handle),
     ],
-    description='New account with concerning handle pattern (age term + numbers)',
+    description=f'New account {Handle} with concerning handle pattern (age term + numbers)',
 )
 
 # New account with "private/priv" in handle
-NewAccountPrivateHandle = Rule(
+NewAccountPrivateHandleRule = Rule(
     when_all=[
         IsCreate == True,
         Collection == 'app.bsky.actor.profile',
         RegexMatch(pattern='priv|private|sigilo', target=Handle),
         RegexMatch(pattern='^[a-z]+[0-9]{3,}$', target=Handle),  # Name + many numbers
     ],
-    description='New "private" account with numeric handle pattern',
+    description=f'New "private" account {Handle} with numeric handle pattern',
 )
 
 # ===== NEW ACCOUNT + IMMEDIATE EXTERNAL LINKS =====
 
 # New account with Telegram promotion in profile
-NewAccountTelegramProfile = Rule(
+NewAccountTelegramProfileRule = Rule(
     when_all=[
         IsCreate == True,
         Collection == 'app.bsky.actor.profile',
         RegexMatch(pattern='t\.me/|telegram\.me/', target=ProfileDescription),
     ],
-    description='New account immediately promoting Telegram in profile',
+    description=f'New account {Handle} immediately promoting Telegram in profile',
 )
 
 # ===== LABELING ACTIONS =====
 
 WhenRules(
-    rules_any=[NewAccountGabrielCosta, NewAccountConcerningHandle, NewAccountPrivateHandle],
+    rules_any=[NewAccountGabrielCostaRule, NewAccountConcerningHandleRule, NewAccountPrivateHandleRule],
     then=[
         AtprotoLabel(
             entity=UserId,
@@ -63,7 +63,7 @@ WhenRules(
 )
 
 WhenRules(
-    rules_any=[NewAccountTelegramProfile],
+    rules_any=[NewAccountTelegramProfileRule],
     then=[
         AtprotoLabel(
             entity=UserId,

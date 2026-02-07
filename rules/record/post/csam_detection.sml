@@ -6,91 +6,95 @@ Import(rules=['models/base.sml', 'models/record/post.sml'])
 # ===== PRIMARY CSAM CONTENT PATTERNS =====
 
 # "CP/-18" pattern (explicit CSAM reference)
-CsamCP18Pattern = Rule(
+CsamCP18PatternRule = Rule(
     when_all=[
         RegexMatch(pattern='CP.?-18', target=PostTextCleaned),
     ],
-    description='Post contains CP/-18 reference (explicit CSAM indicator)',
+    description=f'Post by {Handle} contains CP/-18 reference (explicit CSAM indicator)',
 )
 
 # Portuguese CSAM phrases
-CsamPortuguesePattern = Rule(
+CsamPortuguesePatternRule = Rule(
     when_all=[
         RegexMatch(pattern='midias adolescentes|mÃ­dias adolescentes|vendo midias|vendo mÃ­dias', target=PostTextCleaned),
     ],
-    description='Post contains Portuguese CSAM distribution phrases',
+    description=f'Post by {Handle} contains Portuguese CSAM distribution phrases',
 )
 
-# "bbs" slang (babies - CSAM code word)
-CsamBbsPattern = Rule(
+# "bbs" slang — requires co-occurrence with another CSAM signal
+CsamBbsPatternRule = Rule(
     when_all=[
         RegexMatch(pattern='\\bbbs\\b|bebes|bebÃªs', target=PostTextCleaned),
+        RegexMatch(pattern='t\\.me/|telegram', target=PostTextCleaned, case_insensitive=True)
+            or RegexMatch(pattern='dm me|message me|text me|privado|chama|chamar', target=PostTextCleaned, case_insensitive=True)
+            or RegexMatch(pattern='CP|midias|mÃ­dias|adolescente|teen|cnny', target=PostTextCleaned, case_insensitive=True)
+            or RegexMatch(pattern='#PINTOSAWARD|#XOTAAWARDS|#TROCONUDS|#XOTAWARDS', target=PostTextCleaned),
     ],
-    description='Post contains "bbs" or baby references (CSAM slang)',
+    description=f'Post by {Handle} contains "bbs" with co-occurring CSAM signal',
 )
 
 # ===== KNOWN CSAM INFRASTRUCTURE =====
 
 # Known CSAM Telegram channels
-CsamTelegramGabriel = Rule(
+CsamTelegramGabrielRule = Rule(
     when_all=[
         RegexMatch(pattern='t\.me/gabrielcostacp|telegram.*gabrielcosta', target=PostTextCleaned),
     ],
-    description='Post promotes known CSAM Telegram channel (gabrielcostacp)',
+    description=f'Post by {Handle} promotes known CSAM Telegram channel (gabrielcostacp)',
 )
 
-CsamTelegramBestl = Rule(
+CsamTelegramBestlRule = Rule(
     when_all=[
         RegexMatch(pattern='t\.me/bestlseller|bestlseller', target=PostTextCleaned),
     ],
-    description='Post promotes known CSAM Telegram channel (bestlseller)',
+    description=f'Post by {Handle} promotes known CSAM Telegram channel (bestlseller)',
 )
 
 # CSAM-related hashtags
-CsamHashtags = Rule(
+CsamHashtagsRule = Rule(
     when_all=[
         RegexMatch(pattern='#PINTOSAWARD|#XOTAAWARDS|#TROCONUDS|#XOTAWARDS', target=PostTextCleaned),
     ],
-    description='Post contains known CSAM network hashtags',
+    description=f'Post by {Handle} contains known CSAM network hashtags',
 )
 
 # "cnny" code word
-CnnyPattern = Rule(
+CnnyPatternRule = Rule(
     when_all=[
         RegexMatch(pattern='\\bcnny\\b', target=PostTextCleaned),
     ],
-    description='Post contains "cnny" (CSAM code word)',
+    description=f'Post by {Handle} contains "cnny" (CSAM code word)',
 )
 
 # ===== NETWORK DETECTION =====
 
 # Gabriel Costa network handle pattern + external link
-GabrielCostaNetwork = Rule(
+GabrielCostaNetworkRule = Rule(
     when_all=[
         RegexMatch(pattern='gabriell+costa+|gabriel.*costa.*[0-9]', target=Handle),
         PostHasExternal == True,
     ],
-    description='Account matches Gabriel Costa CSAM network pattern with external links',
+    description=f'Account {Handle} matches Gabriel Costa CSAM network pattern with external links',
 )
 
 # New account + immediate external link to Telegram
-NewAccountTelegram = Rule(
+NewAccountTelegramRule = Rule(
     when_all=[
-        AccountAgeSecondsUnwrapped < 3600,  # Less than 1 hour old
+        AccountAgeSecondsUnwrapped < Hour,
         PostHasExternal == True,
         RegexMatch(pattern='t\.me/|telegram', target=PostTextCleaned),
         RegexMatch(pattern='midias|vendo|bbs|teen|adolescente|private|privado', target=PostTextCleaned),
     ],
-    description='New account immediately sharing Telegram links with concerning keywords',
+    description=f'New account {Handle} immediately sharing Telegram links with concerning keywords',
 )
 
 # ===== LABELING ACTIONS =====
 
 # Label account for CSAM content
 WhenRules(
-    rules_any=[CsamCP18Pattern, CsamPortuguesePattern, CsamBbsPattern, 
-               CsamTelegramGabriel, CsamTelegramBestl, CsamHashtags,
-               CnnyPattern],
+    rules_any=[CsamCP18PatternRule, CsamPortuguesePatternRule, CsamBbsPatternRule,
+               CsamTelegramGabrielRule, CsamTelegramBestlRule, CsamHashtagsRule,
+               CnnyPatternRule],
     then=[
         AtprotoLabel(
             entity=UserId,
@@ -103,7 +107,7 @@ WhenRules(
 
 # Label account for CSAM network membership
 WhenRules(
-    rules_any=[GabrielCostaNetwork, NewAccountTelegram],
+    rules_any=[GabrielCostaNetworkRule, NewAccountTelegramRule],
     then=[
         AtprotoLabel(
             entity=UserId,

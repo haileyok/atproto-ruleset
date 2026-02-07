@@ -34,7 +34,7 @@ _IsLowEngagement = FollowersCount < 10
 # Coordinated spam patterns - different severity levels
 
 # HIGH SEVERITY: Very new account, very short posts, high volume
-HighSeverityCoordinatedSpam = Rule(
+HighSeverityCoordinatedSpamRule = Rule(
   when_all=[
     PostCount30m == 25,
     _IsVeryShortPost,
@@ -44,7 +44,7 @@ HighSeverityCoordinatedSpam = Rule(
 )
 
 # MEDIUM-HIGH SEVERITY: New account with high volume short posts
-MediumHighCoordinatedSpam = Rule(
+MediumHighCoordinatedSpamRule = Rule(
   when_all=[
     PostCount30m == 30,
     _IsShortPost,
@@ -55,7 +55,7 @@ MediumHighCoordinatedSpam = Rule(
 )
 
 # MEDIUM SEVERITY: Any account with extreme short post volume
-MediumCoordinatedSpam = Rule(
+MediumCoordinatedSpamRule = Rule(
   when_all=[
     PostCount30m == 80,
     _IsShortPost,
@@ -65,7 +65,7 @@ MediumCoordinatedSpam = Rule(
 
 # Apply labels based on severity
 WhenRules(
-  rules_any=[HighSeverityCoordinatedSpam],
+  rules_any=[HighSeverityCoordinatedSpamRule],
   then=[
     AtprotoLabel(
       entity=UserId,
@@ -83,7 +83,7 @@ WhenRules(
 )
 
 WhenRules(
-  rules_any=[MediumHighCoordinatedSpam],
+  rules_any=[MediumHighCoordinatedSpamRule],
   then=[
     AtprotoLabel(
       entity=UserId,
@@ -95,7 +95,7 @@ WhenRules(
 )
 
 WhenRules(
-  rules_any=[MediumCoordinatedSpam],
+  rules_any=[MediumCoordinatedSpamRule],
   then=[
     AtprotoLabel(
       entity=UserId,

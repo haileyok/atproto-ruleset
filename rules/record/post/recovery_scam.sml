@@ -11,35 +11,35 @@ Import(
 # Pattern: Reply to users complaining about account locks with fake "recovery help"
 
 # Common recovery scam templates (using regex for pattern matching)
-RecoveryScamPattern1 = Regex(
+_RecoveryScamPattern1 = Regex(
   f=PostTextCleaned,
   r=r'happened to me a week ago.*fustrating.*appeal.*junk.*sorted.*technical support',
 )
 
-RecoveryScamPattern2 = Regex(
+_RecoveryScamPattern2 = Regex(
   f=PostTextCleaned,
   r='technical support.*helped me.*email.*lexcybertech',
 )
 
-RecoveryScamPattern3 = Regex(
+_RecoveryScamPattern3 = Regex(
   f=PostTextCleaned,
   r='reach out to.*technical support.*contacted them.*email',
 )
 
-RecoveryScamPattern4 = Regex(
+_RecoveryScamPattern4 = Regex(
   f=PostTextCleaned,
   r='same (shit|thing) happened to me.*locked out.*technical support',
 )
 
 # Generic "need help?" pattern combined with tech support mentions
-NeedHelpPhrase = StringContains(s=PostTextCleaned, phrase='need help?', case_sensitive=False)
-TechSupportPhrase = StringContains(s=PostTextCleaned, phrase='technical support', case_sensitive=False)
+_NeedHelpPhrase = StringContains(s=PostTextCleaned, phrase='need help?', case_sensitive=False)
+_TechSupportPhrase = StringContains(s=PostTextCleaned, phrase='technical support', case_sensitive=False)
 
-RecoveryHelpOffer = Rule(
+RecoveryHelpOfferRule = Rule(
   when_all=[
     PostIsReply,
-    NeedHelpPhrase,
-    TechSupportPhrase,
+    _NeedHelpPhrase,
+    _TechSupportPhrase,
   ],
   description=f'{Handle} replying with tech support offer - possible recovery scam',
 )
@@ -48,31 +48,31 @@ RecoveryHelpOffer = Rule(
 RecoveryScamTemplateRule = Rule(
   when_all=[
     PostIsReply,
-    RecoveryScamPattern1 or RecoveryScamPattern2 or RecoveryScamPattern3 or RecoveryScamPattern4,
+    _RecoveryScamPattern1 or _RecoveryScamPattern2 or _RecoveryScamPattern3 or _RecoveryScamPattern4,
   ],
   description=f'{Handle} using known recovery scam template - targeting locked out users',
 )
 
 # Track recovery scam posts per user
-RecoveryScamPostCount = IncrementWindow(
+_RecoveryScamPostCount = IncrementWindow(
   key=f'recovery-scam-posts-{UserId}',
-  window_seconds=24 * 60 * 60,  # 24 hours
+  window_seconds=Day,
   when_all=[
-    RecoveryScamTemplateRule or RecoveryHelpOffer,
+    RecoveryScamTemplateRule or RecoveryHelpOfferRule,
   ],
 )
 
 # Multiple recovery scam posts = coordinated abuse
-MultipleRecoveryScams = Rule(
+MultipleRecoveryScamsRule = Rule(
   when_all=[
-    RecoveryScamPostCount == 3,
+    _RecoveryScamPostCount == 3,
   ],
   description=f'{Handle} has posted 3+ recovery scam messages in 24 hours - coordinated fraud',
 )
 
 # Apply labels
 WhenRules(
-  rules_any=[MultipleRecoveryScams],
+  rules_any=[MultipleRecoveryScamsRule],
   then=[
     AtprotoLabel(
       entity=UserId,
