@@ -54,16 +54,6 @@ CsamHashtags = Rule(
     description='Post contains known CSAM network hashtags',
 )
 
-# ===== UNDERAGE CONTENT INDICATORS =====
-
-# Explicit underage references
-UnderageExplicit = Rule(
-    when_all=[
-        RegexMatch(pattern='under\s*18|underage|teenage\s*girls?|adolescentes|menores', target=PostTextCleaned),
-    ],
-    description='Post contains explicit underage content references',
-)
-
 # "cnny" code word
 CnnyPattern = Rule(
     when_all=[
@@ -100,7 +90,7 @@ NewAccountTelegram = Rule(
 WhenRules(
     rules_any=[CsamCP18Pattern, CsamPortuguesePattern, CsamBbsPattern, 
                CsamTelegramGabriel, CsamTelegramBestl, CsamHashtags,
-               UnderageExplicit, CnnyPattern],
+               CnnyPattern],
     then=[
         AtprotoLabel(
             entity=UserId,

@@ -37,14 +37,6 @@ ProfileTelegramCsam = Rule(
     description='Profile links to known CSAM Telegram channels',
 )
 
-# Underage references in profile
-ProfileUnderage = Rule(
-    when_all=[
-        RegexMatch(pattern='under\s*18|underage|teenage|adolescentes|menores|kids?\s*content', target=ProfileDescriptionCleaned),
-    ],
-    description='Profile contains underage content references',
-)
-
 # Solicitation language + concerning keywords
 ProfileSolicitation = Rule(
     when_all=[
@@ -87,7 +79,7 @@ HandlePrivatePattern = Rule(
 
 WhenRules(
     rules_any=[ProfileCsamCP18, ProfileCsamPortuguese, ProfileCsamBbs, 
-               ProfileTelegramCsam, ProfileUnderage, ProfileSolicitation, ProfilePrivateConcerning],
+               ProfileTelegramCsam, ProfileSolicitation, ProfilePrivateConcerning],
     then=[
         AtprotoLabel(
             entity=UserId,
