@@ -9,7 +9,7 @@ Import(
 SuspiciousBulkFollowRule = Rule(
   when_all=[
     AccountAgeSecondsUnwrapped <= 24 * Hour,
-    NewAccountBulkFollow30m >= 300,
+    NewAccountBulkFollow30m == 300,
     RegexMatch(target=Handle, pattern=r'\.myatproto\.social$', case_insensitive=True),
   ],
   description='New account with aggressive bulk following from suspicious domain',
@@ -19,7 +19,7 @@ SuspiciousBulkFollowRule = Rule(
 SevereBulkFollowFundraisingRule = Rule(
   when_all=[
     AccountAgeSecondsUnwrapped <= 12 * Hour,
-    NewAccountBulkFollow30m >= 500,
+    NewAccountBulkFollow30m == 500,
     RegexMatch(target=Handle, pattern=r'saveabed|ma7mods|mhmoods|mohamad|mohd', case_insensitive=True),
   ],
   description='Severe bulk following from account matching known spam patterns',
