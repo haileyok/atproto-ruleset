@@ -93,7 +93,7 @@ WhenRules(
             entity=UserId,
             label='coordinated-abuse',
             comment=f'CSAM indicators detected in profile of {Handle} - Immediate review required',
-            expiration_in_hours=876000,
+            expiration_in_hours=None,
         ),
     ],
 )
@@ -105,7 +105,7 @@ WhenRules(
             entity=UserId,
             label='coordinated-abuse',
             comment=f'CSAM network pattern detected in handle {Handle} - Immediate review required',
-            expiration_in_hours=876000,
+            expiration_in_hours=None,
         ),
     ],
 )
