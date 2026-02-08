@@ -15,12 +15,39 @@ GazaFundraisingGofundmeRule = Rule(
   description=f'Post by {Handle} contains known fraudulent GoFundMe campaign from coordinated operation',
 )
 
+# NEW: Additional fraudulent GoFundMe campaign detected
+GazaFundraisingGofundme7aefRule = Rule(
+  when_all=[
+    PostExternalLink != None,
+    StringContains(s=ForceString(s=PostExternalLink), phrase='gofund.me/7aef13f39', case_sensitive=False),
+  ],
+  description=f'Post by {Handle} contains fraudulent GoFundMe campaign (7aef pattern)',
+)
+
 # Template pattern: Gaza fundraising with WhatsApp contact
 GazaFundraisingTemplateRule = Rule(
   when_all=[
     RegexMatch(target=PostText, pattern=r'\+970-567221224'),
   ],
   description=f'Post by {Handle} contains WhatsApp number from coordinated Gaza fundraising campaign',
+)
+
+# NEW: Pattern for "I'm sorry if this message bothered you" template
+GazaFundraisingApologyTemplateRule = Rule(
+  when_all=[
+    RegexMatch(target=PostText, pattern=r"I'm sorry if this message bothered you", case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r'Mahmod.*Gaza|Gaza.*Mahmod', case_insensitive=True),
+  ],
+  description=f'Post by {Handle} matches "apology + Mahmod from Gaza" template',
+)
+
+# NEW: Pattern for "I beg you donate" template
+GazaFundraisingBegTemplateRule = Rule(
+  when_all=[
+    RegexMatch(target=PostText, pattern=r'I beg you.*donate', case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r'Gaza|survive|nightmare', case_insensitive=True),
+  ],
+  description=f'Post by {Handle} matches "I beg you donate" fundraising template',
 )
 
 # Template pattern: "Molly_Shah" hashtag used in coordinated campaign
@@ -43,7 +70,8 @@ GazaFundraisingTextPatternRule = Rule(
 # Saveabed pattern accounts (highly suspicious naming)
 SaveabedPatternRule = Rule(
   when_all=[
-    RegexMatch(target=Handle, pattern=r'^saveabed[0-9a-f]{4}\.myatproto\.social$', case_insensitive=True),
+    RegexMatch(target=Handle,
+    pattern=r'^saveabed[0-9a-f]{4}\.(myatproto\.social|gems\.xyz|blacksky\.app|cannect\.social|selfhosted\.social)$', case_insensitive=True),
   ],
   description=f'Account {Handle} matches known coordinated spam handle pattern (saveabed)',
 )
@@ -59,7 +87,10 @@ Ma7modsPatternRule = Rule(
 WhenRules(
   rules_any=[
     GazaFundraisingGofundmeRule,
+    GazaFundraisingGofundme7aefRule,
     GazaFundraisingTemplateRule,
+    GazaFundraisingApologyTemplateRule,
+    GazaFundraisingBegTemplateRule,
     GazaFundraisingHashtagRule,
     GazaFundraisingTextPatternRule,
     SaveabedPatternRule,
