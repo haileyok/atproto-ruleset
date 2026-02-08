@@ -54,15 +54,6 @@ MediumHighCoordinatedSpamRule = Rule(
   description=f'New account {Handle} with low engagement posted 30+ short posts in 30 minutes - likely spam',
 )
 
-# MEDIUM SEVERITY: Any account with extreme short post volume
-MediumCoordinatedSpamRule = Rule(
-  when_all=[
-    PostCount30m == 80,
-    _IsShortPost,
-  ],
-  description=f'Account {Handle} posted 40+ short posts in 30 minutes - coordinated spam or bot behavior',
-)
-
 # Apply labels based on severity
 WhenRules(
   rules_any=[HighSeverityCoordinatedSpamRule],
@@ -90,18 +81,6 @@ WhenRules(
       label='coordinated-abuse',
       comment=f'New account with low engagement posted 30+ short posts in 30 minutes',
       expiration_in_hours=168,  # 7 days
-    ),
-  ],
-)
-
-WhenRules(
-  rules_any=[MediumCoordinatedSpamRule],
-  then=[
-    AtprotoLabel(
-      entity=UserId,
-      label='general-spam',
-      comment=f'Extreme posting velocity: 40+ short posts in 30 minutes',
-      expiration_in_hours=48,
     ),
   ],
 )
