@@ -11,7 +11,9 @@ JulieProfileRule = Rule(
     (StringContains(s=ProfileDescription, substrings=True, phrase='girly.bio')
       or StringContains(s=ProfileDescription, substrings=True, phrase='onlyfans')
       or StringContains(s=ProfileDescription, substrings=True, phrase='juliewaifu')
-      or StringContains(s=ProfileDescription, substrings=True, phrase='waifujulie')),
+      or StringContains(s=ProfileDescription, substrings=True, phrase='waifujulie')
+      or StringContains(s=ProfileDescription, substrings=True, phrase='carolinebby')
+      or StringContains(s=ProfileDescription, substrings=True, phrase='carolinebbg')),
     (StringContains(s=ProfileDisplayName, substrings=True, phrase='julie') or
       StringContains(s=Handle, substrings=True, phrase='julie')),
     AccountAgeSecondsUnwrapped <= Day,
