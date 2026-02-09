@@ -56,7 +56,7 @@ WhenRules(
       entity=UserId,
       label='new-acct-slurs',
       comment='New account found to be using slurs',
-      expiration_in_hours=7 * Day,
+      expiration_in_hours=7 * 24,
     ),
   ],
 )

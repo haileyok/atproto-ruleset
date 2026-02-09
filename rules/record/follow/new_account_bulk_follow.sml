@@ -22,19 +22,10 @@ NewAccountBulkFollow10m = IncrementWindow(
   ],
 )
 
-# 30 minute window
+# 30 minute window (also used by gaza_bulk_follow.sml)
 NewAccountBulkFollow30m = IncrementWindow(
   key=f'new-acct-bulk-flw-30m-{UserId}',
   window_seconds=30 * Minute,
-  when_all=[
-    _IsNewOrDormantAccount,
-  ],
-)
-
-# 1 hour window
-NewAccountBulkFollow1h = IncrementWindow(
-  key=f'new-acct-bulk-flw-1h-{UserId}',
-  window_seconds=Hour,
   when_all=[
     _IsNewOrDormantAccount,
   ],
@@ -57,20 +48,6 @@ NewAccountBulkFollow10mRule = Rule(
   description='New/dormant account followed 300+ in 10 minutes',
 )
 
-NewAccountBulkFollow30mRule = Rule(
-  when_all=[
-    NewAccountBulkFollow30m == 300,
-  ],
-  description='New/dormant account followed 300+ in 30 minutes',
-)
-
-NewAccountBulkFollow1hRule = Rule(
-  when_all=[
-    NewAccountBulkFollow1h == 300,
-  ],
-  description='New/dormant account followed 300+ in 1 hour',
-)
-
 NewAccountBulkFollow6hRule = Rule(
   when_all=[
     NewAccountBulkFollow6h == 300,
@@ -78,8 +55,7 @@ NewAccountBulkFollow6hRule = Rule(
   description='New/dormant account followed 300+ in 6 hours',
 )
 
-# Effects - using existing mass-follow-mid label with descriptive comments
-# The 10m and 30m windows are more aggressive and get higher severity
+# 10m is very aggressive — high severity
 WhenRules(
   rules_any=[NewAccountBulkFollow10mRule],
   then=[
@@ -92,30 +68,7 @@ WhenRules(
   ],
 )
 
-WhenRules(
-  rules_any=[NewAccountBulkFollow30mRule],
-  then=[
-    AtprotoLabel(
-      entity=UserId,
-      comment='New/dormant account followed 300+ in 30 minutes',
-      label='mass-follow-mid',
-      expiration_in_hours=24,
-    ),
-  ],
-)
-
-WhenRules(
-  rules_any=[NewAccountBulkFollow1hRule],
-  then=[
-    AtprotoLabel(
-      entity=UserId,
-      comment='New/dormant account followed 300+ in 1 hour',
-      label='mass-follow-mid',
-      expiration_in_hours=24,
-    ),
-  ],
-)
-
+# 6h is slower — mid severity
 WhenRules(
   rules_any=[NewAccountBulkFollow6hRule],
   then=[

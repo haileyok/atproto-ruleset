@@ -13,10 +13,7 @@ Require(
   rule='rules/record/profile/bsky_store.sml',
 )
 Require(
-  rule='rules/record/profile/julie.sml',
-)
-Require(
-  rule='rules/record/profile/suzune.sml',
+  rule='rules/record/profile/adult_spam_profiles.sml',
 )
 Require(rule='rules/record/profile/gaza_fundraising_profile.sml')
 Require(rule='rules/record/profile/csam_detection.sml')

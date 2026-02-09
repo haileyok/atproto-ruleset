@@ -6,6 +6,7 @@ Import(
   ],
 )
 
+# Julie spam profile: "julie" name + OnlyFans/girly.bio/caroline references
 JulieProfileRule = Rule(
   when_all=[
     (StringContains(s=ProfileDescription, substrings=True, phrase='girly.bio')
@@ -21,20 +22,32 @@ JulieProfileRule = Rule(
   description='Julie profile'
 )
 
+# Suzune spam profile: "suzune" name + OnlyFans reference
+SuzuneProfileRule = Rule(
+  when_all=[
+    StringContains(s=ProfileDescription, substrings=True, phrase='onlyfans'),
+    (StringContains(s=ProfileDisplayName, substrings=True, phrase='suzune') or
+      StringContains(s=Handle, substrings=True, phrase='suzune') or
+      StringContains(s=ProfileDescription, substrings=True, phrase='suzune')),
+    AccountAgeSecondsUnwrapped <= Day,
+  ],
+  description='Suzune profile'
+)
+
 WhenRules(
-  rules_any=[JulieProfileRule],
+  rules_any=[JulieProfileRule, SuzuneProfileRule],
   then=[
     AtprotoLabel(
       entity=UserId,
       label='general-spam',
-      comment='Julie spam profile',
+      comment='Adult spam profile',
       expiration_in_hours=None,
     ),
   ],
 )
 
 WhenRules(
-  rules_any=[JulieProfileRule],
+  rules_any=[JulieProfileRule, SuzuneProfileRule],
   then=[
     AtprotoList(
       did=UserId,

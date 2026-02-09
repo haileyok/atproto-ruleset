@@ -12,7 +12,7 @@ _HasShoppingDomain = ListContains(
 )
 
 ShoppingDomainCount = IncrementWindow(
-  key=f'mass-flw-ct-{UserId}',
+  key=f'shopping-spam-ct-{UserId}',
   window_seconds = 30 * Minute,
   when_all=[
     _HasShoppingDomain != None,

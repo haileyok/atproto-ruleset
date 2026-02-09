@@ -36,18 +36,11 @@ CsamBbsPatternRule = Rule(
 # ===== KNOWN CSAM INFRASTRUCTURE =====
 
 # Known CSAM Telegram channels
-CsamTelegramGabrielRule = Rule(
+CsamTelegramRule = Rule(
     when_all=[
-        RegexMatch(pattern='t\.me/gabrielcostacp|telegram.*gabrielcosta', target=PostTextCleaned),
+        RegexMatch(pattern='t\.me/gabrielcostacp|telegram.*gabrielcosta|t\.me/bestlseller|bestlseller', target=PostTextCleaned),
     ],
-    description=f'Post by {Handle} promotes known CSAM Telegram channel (gabrielcostacp)',
-)
-
-CsamTelegramBestlRule = Rule(
-    when_all=[
-        RegexMatch(pattern='t\.me/bestlseller|bestlseller', target=PostTextCleaned),
-    ],
-    description=f'Post by {Handle} promotes known CSAM Telegram channel (bestlseller)',
+    description=f'Post by {Handle} promotes known CSAM Telegram channel',
 )
 
 # CSAM-related hashtags
@@ -93,8 +86,7 @@ NewAccountTelegramRule = Rule(
 # Label account for CSAM content
 WhenRules(
     rules_any=[CsamCP18PatternRule, CsamPortuguesePatternRule, CsamBbsPatternRule,
-               CsamTelegramGabrielRule, CsamTelegramBestlRule, CsamHashtagsRule,
-               CnnyPatternRule],
+               CsamTelegramRule, CsamHashtagsRule, CnnyPatternRule],
     then=[
         AtprotoLabel(
             entity=UserId,
