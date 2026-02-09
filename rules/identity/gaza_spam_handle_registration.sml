@@ -12,13 +12,13 @@ GazaSpamHandleRegistrationRule = Rule(
   description=f'Handle {Handle} matches known saveabed spam pattern',
 )
 
-# Ma7mods/mhmoods handle registration
+# Ma7mods/mhmoods handle registration - UPDATED: added m7mods variant and expanded domains
 Ma7modsHandleRegistrationRule = Rule(
   when_all=[
-    RegexMatch(target=Handle, pattern=r'^(ma7mods|mhmoods)', case_insensitive=True),
-    RegexMatch(target=Handle, pattern=r'\.myatproto\.social$', case_insensitive=True),
+    RegexMatch(target=Handle, pattern=r'^(ma7mods|m7mods|mhmoods)', case_insensitive=True),
+    RegexMatch(target=Handle, pattern=r'\.(myatproto\.social|gems\.xyz|blacksky\.app|cryptoanarchy\.network|peedee\.es|yinz\.social)$', case_insensitive=True),
   ],
-  description=f'Handle {Handle} matches ma7mods spam pattern',
+  description=f'Handle {Handle} matches ma7mods/m7mods spam pattern',
 )
 
 # Gaza-themed handle with numeric suffix from suspicious domain

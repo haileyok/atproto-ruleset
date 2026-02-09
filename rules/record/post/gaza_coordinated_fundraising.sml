@@ -35,7 +35,7 @@ GazaFundraisingTemplateRule = Rule(
 # NEW: Pattern for "I'm sorry if this message bothered you" template
 GazaFundraisingApologyTemplateRule = Rule(
   when_all=[
-    RegexMatch(target=PostText, pattern=r"I'm sorry if this message bothered you", case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r"I\'m sorry if this message bothered you", case_insensitive=True),
     RegexMatch(target=PostText, pattern=r'Mahmod.*Gaza|Gaza.*Mahmod', case_insensitive=True),
   ],
   description=f'Post by {Handle} matches "apology + Mahmod from Gaza" template',
@@ -76,12 +76,12 @@ SaveabedPatternRule = Rule(
   description=f'Account {Handle} matches known coordinated spam handle pattern (saveabed)',
 )
 
-# Ma7mods pattern accounts
+# Ma7mods pattern accounts - UPDATED: added m7mods variant
 Ma7modsPatternRule = Rule(
   when_all=[
-    RegexMatch(target=Handle, pattern=r'^ma7mods|mhmoods', case_insensitive=True),
+    RegexMatch(target=Handle, pattern=r'^(ma7mods|m7mods|mhmoods)', case_insensitive=True),
   ],
-  description=f'Account {Handle} matches known coordinated spam handle pattern (ma7mods/mhmoods)',
+  description=f'Account {Handle} matches known coordinated spam handle pattern (ma7mods/m7mods/mhmoods)',
 )
 
 WhenRules(
