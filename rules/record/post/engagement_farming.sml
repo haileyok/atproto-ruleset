@@ -25,7 +25,7 @@ _FollowBackCount1h = IncrementWindow(
 # Threshold: 3+ follow-back posts in 1 hour
 FollowBackSpamRule = Rule(
   when_all=[
-    _FollowBackCount1h >= 3,
+    _FollowBackCount1h == 3,
   ],
   description=f'Repeated follow-back engagement farming (3+ in 1h): {UserId}',
 )
@@ -43,7 +43,7 @@ _ChatRequestCount1h = IncrementWindow(
 # Threshold: 5+ chat-request posts in 1 hour
 ChatRequestSpamRule = Rule(
   when_all=[
-    _ChatRequestCount1h >= 5,
+    _ChatRequestCount1h == 5,
   ],
   description=f'Repeated chat/DM solicitation (5+ in 1h): {UserId}',
 )

@@ -21,7 +21,7 @@ _ToxicPostCountHour = IncrementWindow(
 )
 
 ToxicPostingRule = Rule(
-  when_all=[ToxicPostCount >= 10 or _ToxicPostCountHour >= 4],
+  when_all=[ToxicPostCount == 10 or _ToxicPostCountHour == 4],
   description='User has made three or more toxic posts in a four hour window',
 )
 

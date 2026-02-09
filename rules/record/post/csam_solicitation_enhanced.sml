@@ -122,7 +122,7 @@ _PytYoungPostCount6h = IncrementWindow(
 
 RepeatedPytYoungPostingRule = Rule(
     when_all=[
-        _PytYoungPostCount6h >= 3,
+        _PytYoungPostCount6h == 3,
     ],
     description=f'Account {Handle} posted #pyt + age tags 3+ times in 6 hours',
 )
