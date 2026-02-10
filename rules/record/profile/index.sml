@@ -18,3 +18,4 @@ Require(
 Require(rule='rules/record/profile/gaza_fundraising_profile.sml')
 Require(rule='rules/record/profile/csam_detection.sml')
 Require(rule='rules/record/profile/csam_account_detection.sml')
+Require(rule='rules/record/profile/fundraising_display_name.sml')
