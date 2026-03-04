@@ -83,24 +83,3 @@ PostAllDomains: List[str] = ConcatStringLists(
 )
 
 PostEmoji: List[str] = ExtractEmoji(s=PostText)
-
-SentimentScore: Optional[float] = AnalyzeSentiment(text=PostText, when_all=[
-  SimpleListContains(
-    cache_name='sentiment_langs',
-    list=['en'],
-    phrases=PostLanguages,
-  ) != None,
-])
-
-SentimentScoreUnwrapped: float = ResolveOptional(optional_value=SentimentScore, default_value=0.0)
-
-
-ToxicityScore: Optional[float] = AnalyzeToxicity(text=PostText, when_all=[
-  SimpleListContains(
-    cache_name='sentiment_langs',
-    list=['en'],
-    phrases=PostLanguages,
-  ) != None,
-])
-
-ToxicityScoreUnwrapped: float = ResolveOptional(optional_value=ToxicityScore, default_value=0.0)
