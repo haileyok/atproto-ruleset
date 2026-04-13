@@ -50,21 +50,48 @@ GazaFundraisingBegTemplateRule = Rule(
   description=f'Post by {Handle} matches "I beg you donate" fundraising template',
 )
 
-# Template pattern: "Molly_Shah" hashtag used in coordinated campaign
+# UPDATED: Expanded to catch @mommunism handle mentions in addition to "Molly Shah" text
 GazaFundraisingHashtagRule = Rule(
   when_all=[
-    RegexMatch(target=PostText, pattern=r'Molly[_\s]?Shah', case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r'Molly[_\s]?Shah|@mommunism', case_insensitive=True),
   ],
-  description=f'Post by {Handle} contains hashtag from coordinated fundraising campaign',
+  description=f'Post by {Handle} contains Molly Shah mention or false verification claim',
 )
 
-# Template pattern: "Gaza is bleeding" / "from the heart of Gaza" templates
+# UPDATED: Split into two patterns - one requiring WhatsApp, one for "heart of Gaza" alone
+_GazaHeartOfTextPattern = RegexMatch(
+  target=PostText, 
+  pattern=r'(in|from)\s+the\s+heart\s+of\s+Gaza', 
+  case_insensitive=True
+)
+
+_GazaWhatsAppPattern = RegexMatch(
+  target=PostText, 
+  pattern=r'WhatsApp:\s*\+', 
+  case_insensitive=True
+)
+
+_GazaBleedingPattern = RegexMatch(
+  target=PostText, 
+  pattern=r'Gaza is bleeding|this is not spam', 
+  case_insensitive=True
+)
+
 GazaFundraisingTextPatternRule = Rule(
   when_all=[
-    RegexMatch(target=PostText, pattern=r'Gaza is bleeding|from the heart of Gaza|this is not spam', case_insensitive=True),
-    RegexMatch(target=PostText, pattern=r'WhatsApp:\s*\+', case_insensitive=True),
+    _GazaHeartOfTextPattern or (_GazaBleedingPattern and _GazaWhatsAppPattern),
   ],
   description=f'Post by {Handle} matches template from coordinated Gaza fundraising campaign',
+)
+
+# NEW: Emotional manipulation template - "lifeline" + "grateful" pattern
+GazaFundraisingEmotionalTemplateRule = Rule(
+  when_all=[
+    RegexMatch(target=PostText, pattern=r'Gaza', case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r'lifeline|eternally grateful|you are our angels', case_insensitive=True),
+    RegexMatch(target=PostText, pattern=r'donat(e|ion)|support|help', case_insensitive=True),
+  ],
+  description=f'Post by {Handle} uses emotional manipulation template for Gaza fundraising',
 )
 
 # Saveabed pattern accounts (highly suspicious naming)
@@ -93,6 +120,7 @@ WhenRules(
     GazaFundraisingBegTemplateRule,
     GazaFundraisingHashtagRule,
     GazaFundraisingTextPatternRule,
+    GazaFundraisingEmotionalTemplateRule,
     SaveabedPatternRule,
     Ma7modsPatternRule,
   ],
